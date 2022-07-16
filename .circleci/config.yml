@@ -37,3 +37,4 @@ workflows:
   create-infrastructure-workflow:
     jobs:
       - create-infrastructure
+      - configure-infrastructure
