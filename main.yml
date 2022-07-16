@@ -1,0 +1,6 @@
+---
+  - name: Configuring Deployment
+    hosts: all
+    user: ubuntu
+    roles:
+      setup
