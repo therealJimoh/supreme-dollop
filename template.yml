@@ -7,13 +7,25 @@ Resources:
       KeyName: projansible
       ImageId: ami-0d70546e43a941d70
       InstanceType: t2.micro
-      SecurityGroups: 
-        - !Ref InstanceSecurityGroup
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          GroupSet:
+            - Ref: InstanceSecurityGroup
+          SubnetId:
+            Ref: PublicSubnet
   VPC:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: 10.0.0.0/16
       EnableDnsHostnames: true
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      AvailabilityZone: !Select [0, !GetAZs ""]
+      CidrBlock: 10.0.0.0/24
+      MapPublicIpOnLaunch: true
   InstanceSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
