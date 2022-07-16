@@ -7,7 +7,8 @@ Resources:
       KeyName: projansible
       ImageId: ami-0d70546e43a941d70
       InstanceType: t2.micro
-      SecurityGroups: !Ref InstanceSecurityGroup
+      SecurityGroups: 
+        - !Ref InstanceSecurityGroup
   VPC:
     Type: AWS::EC2::VPC
     Properties:
