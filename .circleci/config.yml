@@ -18,7 +18,7 @@ jobs:
               --region us-west-2
   configure-infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.7.11-alpine3.13
     steps:
       - checkout
       - add_ssh_keys:
@@ -36,5 +36,5 @@ jobs:
 workflows:
   create-infrastructure-workflow:
     jobs:
-      - create-infrastructure
+      # - create-infrastructure
       - configure-infrastructure
