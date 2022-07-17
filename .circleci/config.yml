@@ -1,12 +1,20 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 version: 2.1
 
+#Reuseable commands in jobs
+commands:
+  destroy-environment:
+    steps:
+      - run:
+          name: destroy environment
+          command: |
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+
 # Define a job to be invoked later in a workflow.
 jobs:
   create-infrastructure:
     docker:
       - image: amazon/aws-cli
-    # Add steps to the job
     steps:
       - checkout
       - run:
@@ -16,6 +24,8 @@ jobs:
               --template-body file://template.yml \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-west-2
+      - destroy-environment
+        when: on_fail
   configure-infrastructure:
     docker:
       - image: python:3.8-alpine
@@ -31,7 +41,7 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook -i inventory.txt main.yml
-  smoke_test:
+  smoke-test:
     docker:
       - image: alpine:latest
     steps:
@@ -53,4 +63,4 @@ workflows:
     jobs:
       # - create-infrastructure
       # - configure-infrastructure
-      - smoke_test
+      - smoke-test
