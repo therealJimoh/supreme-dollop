@@ -3,7 +3,7 @@ version: 2.1
 
 #Reuseable commands in jobs
 commands:
-  destroy-environment:
+  destroy_environment:
     steps:
       - run:
           name: destroy environment
@@ -24,8 +24,8 @@ jobs:
               --template-body file://template.yml \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-west-2
-      - destroy-environment
-          when: on_fail
+      - destroy_environment
+        when: on_fail
   configure-infrastructure:
     docker:
       - image: python:3.8-alpine
