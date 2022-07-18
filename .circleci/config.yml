@@ -8,7 +8,7 @@ commands:
       - run:
           name: destroy environment
           command: |
-            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID}
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
           when: on_fail
 
 # Define a job to be invoked later in a workflow.
@@ -45,14 +45,14 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
-      - name: Create and deploy the frontend 
+      - name: Execute Bucket Creation - CloudFormation and deploy to frontend 
         command: |
            aws cloudformation create-stack \
               --template-body file://bucket.yml \
               --parameters file://bucketparams.json \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region us-west-2
-      - destroy_environment
+      # - destroy_environment
   smoke-test:
     docker:
       - image: alpine:latest
@@ -75,4 +75,5 @@ workflows:
     jobs:
       - create-infrastructure
       # - configure-infrastructure
+      - create-and-deploy-frontend
       - smoke-test
