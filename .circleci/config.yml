@@ -45,13 +45,14 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
-      - name: Execute Bucket Creation - CloudFormation and deploy to frontend 
-        command: |
-           aws cloudformation create-stack \
-              --template-body file://bucket.yml \
-              --parameters file://bucketparams.json \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
-              --region us-west-2
+      - run:
+          name: Execute Bucket Creation - CloudFormation and deploy to frontend 
+          command: |
+            aws cloudformation create-stack \
+                --template-body file://bucket.yml \
+                --parameters file://bucketparams.json \
+                --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
+                --region us-west-2
       # - destroy_environment
   smoke-test:
     docker:
