@@ -8,7 +8,7 @@ commands:
       - run:
           name: destroy environment
           command: |
-            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}
+            aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID}
           when: on_fail
 
 # Define a job to be invoked later in a workflow.
@@ -23,7 +23,7 @@ jobs:
           command: |
             aws cloudformation create-stack \
               --template-body file://template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID} \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
               --region us-west-2
       - destroy_environment
   configure-infrastructure:
@@ -50,7 +50,7 @@ jobs:
           command: |
             aws cloudformation create-stack \
               --template-body file://bucket.yml \
-              --parameters file://bucketparams.json \
+              # --parameters file://bucketparams.json \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region us-west-2
       - destroy_environment
@@ -74,7 +74,7 @@ jobs:
 workflows:
   create-infrastructure-workflow:
     jobs:
-      - create-infrastructure
+      # - create-infrastructure
       # - configure-infrastructure
       - create-and-deploy-frontend
       - smoke-test
