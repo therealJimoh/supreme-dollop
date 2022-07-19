@@ -49,8 +49,8 @@ jobs:
           name: Execute Bucket Creation - CloudFormation and deploy to frontend 
           command: |
             aws cloudformation create-stack \
-              --template-body bucket.yml \
-              --parameters file://bucketparams.json \
+              --template-body file:///supreme-dollop/bucket.yml \
+              --parameters file:///supreme-dollop/bucketparams.json \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region us-west-2
       - destroy_environment
