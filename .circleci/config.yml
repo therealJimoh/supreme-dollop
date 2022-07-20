@@ -85,16 +85,19 @@ jobs:
             --stack-name production-distro \
             --parameter-overrides PipelineID="mybucket-${CIRCLE_WORKFLOW_ID:0:7}" \
             --region us-west-2
-  clean-up-old-frontend:
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - checkout
-      - run: yum install -y tar gzip
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Destroy the previous s3 bucket and Cloudformation stack  
+  # clean-up-old-frontend:
+  #   docker:
+  #     - image: amazon/aws-cli
+  #   steps:
+  #     - checkout
+  #     - run: yum install -y tar gzip
+  #     - attach_workspace:
+  #         at: ~/
+  #     - run:
+  #         name: Destroy the previous s3 bucket and Cloudformation stack  
+  #         command: |
+  #           export OldBucketID=$(cat ~textfile.txt)
+  #           aws s3 rm "s3:://${OldBucketID}" --recursive
   smoke-test:
     docker:
       - image: alpine:latest
