@@ -120,10 +120,10 @@ workflows:
     jobs:
       # - create-infrastructure
       # - configure-infrastructure
-      - create-and-deploy-frontend
-      - promote-to-production:
-          requires:
-            - create-and-deploy-frontend
+      # - create-and-deploy-frontend
+      # - promote-to-production:
+      #     requires:
+      #       - create-and-deploy-frontend
       - smoke-test
       - get-last-deployment-id
       # - clean-up-old-frontend:
