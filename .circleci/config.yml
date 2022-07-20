@@ -68,9 +68,9 @@ jobs:
             list-exports --query "Exports[?Name==\`PipelineID\`].Value" \
             --no-paginate --output text > ~/textfile.txt
       - persist_to_workspace:
-        root: ~/
-        paths:
-          - textfile.txt
+          root: ~/
+          paths:
+            - textfile.txt
   promote-to-production:
     docker:
       - image: amazon/aws-cli
