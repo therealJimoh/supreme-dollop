@@ -118,12 +118,12 @@ workflows:
       # - create-infrastructure
       # - configure-infrastructure
       - create-and-deploy-frontend
-      - promote-to-production
+      - promote-to-production:
           requires:
             - create-and-deploy-frontend
       - smoke-test
       - get-last-deployment-id
-      # - clean-up-old-frontend
+      # - clean-up-old-frontend:
       #     requires:
       #       - et-last-deployment-id
       #       - promote-to-production
